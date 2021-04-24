@@ -1,0 +1,81 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>HipsterTrek</title>
+    <link rel='icon' type='image/png' href='favicon.ico'>
+    <style type='text/css' media='screen'>
+        @font-face {
+            font-family: 'ShareTechMono';
+            src: url('ShareTechMono-Regular.ttf');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body {
+            font-family: 'ShareTechMono', sans-serif;
+            background-color: #111111;
+            text-decoration-color: #ffffff;
+            color: #eeeeee;
+            margin: auto;
+            padding: 0;
+        }
+        .navbar {
+            width: 100%;
+            overflow: hidden;
+            background-image: linear-gradient(to right, #880000, #008800, #000088);
+            font-family: Arial, sans-serif;
+        }
+        .navbar a {
+            float: left;
+            font-family: 'ShareTechMono', sans-serif;
+            font-size: large;
+            color: #eeeeee;
+            text-align: center;
+            padding: 14px 14px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #888888;
+            color: #ffffff;
+        }
+        .navbar a.active {
+            background-image: #222222;
+            color: #ffffff;
+        }
+        .footbar {
+            color: #ffffff;
+            background-color: #0f0f0f;
+            text-align: right;
+            overflow: hidden;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 5px 0px;
+            font-size: 12px;
+           
+        }
+    </style>
+    <script src='https://d3js.org/d3.v5.min.js' charset='utf-8'></script>
+</head> 
+  
+<body>
+    <div class='navbar'>
+        <a class='active' href='/'>HipsterTrek 🗺</a>
+        <a style='float: right;' href='about'>About 📚</a>
+    </div>
+    <h1 style='text-align: center;'>Error 404: Page Not Found</h1>
+    <div style='text-align: center;' id='contact'>
+        <form style='text-align: center; background: rgba(0,0,0,0.75); padding: 20px;' action='/console' method='POST'>
+            <h1 style='color: #ffffff; text-align: center;'>⁉️💽⁉️</h1>
+        </br>
+            <label style='color: #ffffff; text-align: center;' for='symbol'>It's a bit empty around here.</label>
+        </form>
+    </div>
+</body>
+
+<footer>
+    <div class='footbar'>
+        HipsterTrek © 2021 &nbsp;
+    </div>
+</footer>
+  
+</html> 

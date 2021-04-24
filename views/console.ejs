@@ -1,0 +1,396 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <title>HipsterTrek</title>
+    <link rel='icon' type='image/png' href='favicon.ico'>
+    <style type='text/css' media='screen'>
+        @font-face {
+            font-family: 'ShareTechMono';
+            src: url('ShareTechMono-Regular.ttf');
+            font-weight: normal;
+            font-style: normal;
+        }
+        body {
+            font-family: 'ShareTechMono', sans-serif;
+            background-color: #111111;
+            text-decoration-color: #ffffff;
+            color: #eeeeee;
+            margin: auto;
+            padding: 0;
+        }
+        .navbar {
+            width: 100%;
+            overflow: hidden;
+            background-image: linear-gradient(to right, #880000, #008800, #000088);
+            font-family: Arial, sans-serif;
+        }
+        .navbar a {
+            float: left;
+            font-family: 'ShareTechMono', sans-serif;
+            font-size: large;
+            color: #eeeeee;
+            text-align: center;
+            padding: 14px 14px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #888888;
+            color: #ffffff;
+        }
+        .navbar a.active {
+            background-image: #555555;
+            color: #ffffff;
+        }
+        .footbar {
+            color: #ffffff;
+            background-color: #0f0f0f;
+            text-align: right;
+            overflow: hidden;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 5px 0px;
+            font-size: 12px;
+           
+        }
+        #container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 150px auto auto auto;
+        }
+        #canvas {
+            top: 50px;
+        }​
+        .modal-backdrop {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            padding-top: fit-content;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 200%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0);
+        }
+        .modal-content {
+            display: none;
+            position: absolute;
+            color: #ffffff;
+            margin: 0px;
+            font-size: large;
+            background-color: rgba(0,0,0,0.8);
+            padding: 10px;
+            width: fit-content;
+            border-radius: 25px;
+            border: 2px solid #ffffff;
+        }
+        .close {
+            color: #ffffff;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: #ffff00;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+    <script src='https://d3js.org/d3.v5.min.js' charset='utf-8'></script>
+</head> 
+  
+<body>
+    <div class='navbar'>
+        <a class='active' href='/'>HipsterTrek 🗺</a>
+        <a style='float: right;' href='about'>About 📚</a>
+    </div>
+
+    <h1 id='title' style='text-align: center;'></h1>
+
+    <table id="container" style="width: fit-content; height: 50%; border: 2px solid #ffffff;">
+        <tbody>
+            <tr>
+                <td><div id='canvas' style="width: fit-content;"></div></td>
+                <td><iframe src="https://open.spotify.com/embed/artist/2zu4O5MNLn9MTmm4OM2Yz1" width="225" height="400" frameborder="0" allowtransparency="true" allow="encrypted-media" style="padding-right: 10px; margin: 0px;"></iframe></td>
+            </tr>
+            <tr><td>gg</td></tr>
+        </tbody>
+    </table>
+    
+    
+
+    <div id='genreCanvas' class='modal-backdrop'>
+        <div id='genreModal' class='modal-content'>
+            <span class='close'>&times;</span>
+            <h5 style='margin: 0px 0px 10px 0px; font-size: large;' id='genreName'>Genre</h5>
+            <p style='margin: 0px; font-size: smaller; font-style: italic;'>Summary: </p>
+            <p style='margin: 0px; font-size: medium;' id='genreSummary'>null</p>
+            <br/>
+            <p style='margin: 0px; font-size: smaller; font-style: italic;'>Albums From This Genre: </p>
+            <p style='margin: 0px; font-size: medium;' id='genreAlbum1'>null</p>
+            <img id="albumimg1" src="HipsterTrek.png" alt="Genre Album Cover 1" width="64" height="64"/>
+            <p style='margin: 0px; font-size: medium;' id='genreAlbum2'>null</p>
+            <img id="albumimg2" src="HipsterTrek.png" alt="Genre Album Cover 2" width="64" height="64"/>
+            <p style='margin: 0px; font-size: medium;' id='genreAlbum3'>null</p>
+            <img id="albumimg3" src="HipsterTrek.png" alt="Genre Album Cover 3" width="64" height="64"/>
+        </div>
+    </div>
+
+    <script>
+        var modal;
+        var backdrop;
+
+        var svgContainer = d3
+            .select("#canvas")
+            .append('svg')
+            .attr('align','center')
+            .attr('width',1105)
+            .attr('height',700);
+
+        var defs = svgContainer.append("defs");
+
+        var gradient1 = defs
+            .append("linearGradient")
+            .attr("id", "startGradient")
+            .attr("x1", "0%")
+            .attr("x2", "100%")
+            .attr("y1", "0%")
+            .attr("y2", "100%");
+
+        gradient1
+            .append("stop")
+            .attr('class', 'start')
+            .attr("offset", "0%")
+            .attr("stop-color", "red")
+            .attr("stop-opacity", 1);
+
+        gradient1
+            .append("stop")
+            .attr('class', 'end')
+            .attr("offset", "100%")
+            .attr("stop-color", "green")
+            .attr("stop-opacity", 1);
+
+        var gradient2 = defs
+            .append("linearGradient")
+            .attr("id", "endGradient")
+            .attr("x1", "0%")
+            .attr("x2", "100%")
+            .attr("y1", "0%")
+            .attr("y2", "100%");
+
+        gradient2
+            .append("stop")
+            .attr('class', 'start')
+            .attr("offset", "0%")
+            .attr("stop-color", "green")
+            .attr("stop-opacity", 1);
+
+        gradient2
+            .append("stop")
+            .attr('class', 'end')
+            .attr("offset", "100%")
+            .attr("stop-color", "blue")
+            .attr("stop-opacity", 1);
+
+        var payload = <%- JSON.stringify(data) %>;
+
+        const albums = {
+            DrumNBass: [`Photek:\nModus Operandi`, `Goldie:\nTimeless`, `Workforce:\nLate Night Soundtrack`],
+            Industrial: [`Nine Inch Nails:\nPretty Hate Machine`, `Coil:\nHorse Rotorvator`, `Poppy:\nI Disagree`],
+            Grunge: [`Nirvana:\nNevermind`, `Hole:\nLive Through This`, `Pixies:\nTrompe le Monde`],
+            Rap: [`Jay-Z:\nThe Blueprint`, `Kanye West:\nLate Registration`, `Lauryn Hill:\nThe Miseducation of Lauryn Hill`],
+            LoFi: [`Neutral Milk Hotel:\nIn the Aeroplane Over the Sea`, `The Microphones:\nThe Glow Pt.2`, `Grimes:\nArt Angels`],
+            Metal: [`Metallica:\nMaster of Puppets`, `Black Sabbath:\nParanoid`, `Iron Maiden:\nPowerslave`],
+            Rock: [`The Beatles:\nAbbey Road`, `Pink Floyd:\nThe Dark Side of the Moon`, `Aerosmith:\nAerosmith`],
+            Reggae: [`Bob Marley and the Wailers:\nLegend`, `Toots and the Maytals:\nFunky Kingston`, `The Congos:\nHeart of the Congos`],
+            RNB: [`Frank Ocean:\nBlond`, `Solange:\nA Seat At The Table`, `Usher:\nConfessions`],
+            EDM: [`Daft Punk:\nRandom Access Memories`, `Flume:\nSkin`, `Jack Ü:\nSkrillex and Diplo Present Jack Ü`],
+            Pop: [`Michael Jackson:\nThriller`, `Dua Lipa:\nFuture Nostalgia`, `Lady Gaga:\nArtpop`],
+            Jazz: [`John Coltrane:\nA Love Supreme`, `Stan Getz:\nGetz/Gilberto`, `Aretha Franklin:\nGreatest Hits`],
+            Funk: [`Rick James:\nStreet Songs`, `Herbie Hancock:\nHead Hunters`, `George Duke:\nGaurdian of the Light`],
+            Gospel: [`Kirk Franklin:\nThe Rebirth of Kirk Franklin`, `Sunday Service Choir:\nJesus Is Born`, `Various Artists:\nEMI Gospel 2010`],
+            Country: [`Johnny Cash:\nAt Folsom Prison`, `Taylor Swift:\nFearless`, `Blake Shelton:\nRed River Blue`],
+            Alternative: [`Radiohead:\nOK Computer`, `Weezer:\nWeezer`, `Panic! At The Disco:\nA Fever You Can't Sweat Out`],
+            Mowtown: [`Marvin Gaye:\nWhat's Going On`, `The Marcels:\nBlue Moon`, `The Jackson 5:\nDiana Ross Presents The Jackson 5`],
+            Blues: [`Nina Simone:\nWild Is the Wind`, `Bobby Caldwell:\nBobby Caldwell`, `B.B. King:\nB.B. King Live at the Regal`],
+            Folk: [`John Denver:\nPoems, Prayers & Promises`, `Shirley Collins:\nHeart's Ease`, `Woody Guthrie:\nDust Bowl Ballads`],
+            Latin: [`Bad Bunny:\nYHLQMDLG`, `Selena:\nDreaming of You`, `Gente de Zona:\nVisualízate`],
+            Theatre: [`Lin-Manuel Miranda:\nHamilton`, `Claude-Michel Schönberg:\nLes Misérables`, `Jerry Herman:\nHello, Dolly!`],
+            Hynms: [`Choir of King’s College, Cambridge:\nBest Loved Hymns`, `Don Moen:\nHymnbook`, `Joey + Rory:\nHymns`],
+            Band: [`John Philip Sousa:\nAmerican Military Marches`, `Duke Ellington:\nEllington at Newport`, `Frank Sinatra:\nCome Fly with Me`],
+            International: [`Drake:\nMore Life`, `Imran Khan:\nUnforgettable`, `Gims:\nCeinture Noire`],
+            Scores: [`John Williams:\nJurassic Park: Original Motion Picture Soundtrack`, `Hans Zimmer:\nThe Dark Knight: Original Motion Picture Soundtrack`, `Michael Giacchino:\nRatatouille`],
+            Classical: [`Yo-Yo Ma:\nSongs of Joy and Peace`, `Wolfgang Amadeus Mozart:\nMozart in the Morning`, `Ludwig van Beethoven:\nThe Best of Beethoven`],
+            Traditional: [`Yggdrasil:\nWardruna Runaljod`, `Ebenezer Obey:\nJuju Jubilee`, `Duo En:\nMoonviewing`],  
+        };
+
+        var genrepath = [];
+        var genrealbums = [];
+        
+        for(let i = 0; i < payload[0].length; i++) {
+            genrepath.push(payload[0][i]);
+            genrealbums.push(albums[payload[0][i]]);
+        }
+
+        document.getElementById('title').innerHTML = `Your Music Trek: From ${genrepath[0]} to ${genrepath[genrepath.length-1]}`;
+
+        const nodes = [
+            [190, 100],     // DrumNBass
+            [390, 50],      // Industrial
+            [840, 75],      // Grunge
+            [140, 175],     // Rap
+            [365, 125],     // LoFi
+            [527.5, 150],   // Metal
+            [702.5, 162.5], // Rock
+            [90, 250],     // Reggae
+            [315, 200],     // RNB
+            [565, 250],     // EDM
+            [727.5, 250],   // Pop
+            [115, 362.5],   // Jazz
+            [315, 267.5],   // Funk
+            [465, 300],     // Gospel
+            [665, 337.5],   // Country
+            [827.5, 325],   // Alternative
+            [202.5, 450],   // Mowtown
+            [390, 400],     // Blues
+            [1015, 387.5],  // Folk
+            [365, 500],     // Latin
+            [602.5, 487.5], // Theatre
+            [802.5, 487.5], // Hynms
+            [90, 600],     // Band
+            [490, 600],     // International
+            [640, 550],     // Scores
+            [690, 662.5],   // Classical
+            [840, 575],     // Traditional
+        ];
+
+        const edges = [
+            [nodes[0], nodes[1], [`DrumNBass`, `Industrial`]],
+            [nodes[1], nodes[5], [`Industrial`, `Metal`]],
+            [nodes[1], nodes[6], [`Industrial`, `Rock`]],
+            [nodes[6], nodes[5], [`Rock`, `Metal`]],
+            [nodes[2], nodes[6], [`Grunge`, `Rock`]],
+            [nodes[2], nodes[15], [`Grunge`, `Alternative`]],
+            [nodes[0], nodes[3], [`DrumNBass`, `Rap`]],
+            [nodes[3], nodes[7], [`Rap`, `Reggae`]],
+            [nodes[11], nodes[16], [`Jazz`, `Mowtown`]],
+            [nodes[0], nodes[9], [`DrumNBass`, `EDM`]],
+            [nodes[0], nodes[4], [`DrumNBass`, `LoFi`]],
+            [nodes[3], nodes[4], [`Rap`, `LoFi`]],
+            [nodes[3], nodes[8], [`Rap`, `RNB`]],
+            [nodes[11], nodes[12], [`Jazz`, `Funk`]],
+            [nodes[8], nodes[12], [`RNB`, `Funk`]],
+            [nodes[7], nodes[11], [`Reggae`, `Jazz`]],
+            [nodes[16], nodes[13], [`Mowtown`, `Gospel`]],
+            [nodes[13], nodes[17], [`Gospel`, `Blues`]],
+            [nodes[13], nodes[20], [`Gospel`, `Theatre`]],
+            [nodes[13], nodes[21], [`Gospel`, `Hynms`]],
+            [nodes[13], nodes[8], [`Gospel`, `RNB`]],
+            [nodes[16], nodes[17], [`Mowtown`, `Blues`]],
+            [nodes[16], nodes[20], [`Mowtown`, `Theatre`]],
+            [nodes[11], nodes[22], [`Jazz`, `Band`]],
+            [nodes[22], nodes[20], [`Band`, `Theatre`]],
+            [nodes[22], nodes[25], [`Band`, `Classical`]],
+            [nodes[19], nodes[3], [`Latin`, `Rap`]],
+            [nodes[19], nodes[7], [`Latin`, `Reggae`]],
+            [nodes[9], nodes[10], [`EDM`, `Pop`]],
+            [nodes[9], nodes[23], [`EDM`, `International`]],
+            [nodes[10], nodes[6], [`Pop`, `Rock`]],
+            [nodes[10], nodes[14], [`Pop`, `Country`]],
+            [nodes[10], nodes[15], [`Pop`, `Alternative`]],
+            [nodes[17], nodes[14], [`Blues`, `Country`]],
+            [nodes[15], nodes[14], [`Alternative`, `Country`]],
+            [nodes[18], nodes[14], [`Folk`, `Country`]],
+            [nodes[18], nodes[15], [`Folk`, `Alternative`]],
+            [nodes[18], nodes[20], [`Folk`, `Theatre`]],
+            [nodes[18], nodes[21], [`Folk`, `Hynms`]],
+            [nodes[18], nodes[6], [`Folk`, `Rock`]],
+            [nodes[21], nodes[25], [`Hynms`, `Classical`]],
+            [nodes[21], nodes[26], [`Hynms`, `Traditional`]],
+            [nodes[24], nodes[20], [`Scores`, `Theatre`]],
+            [nodes[24], nodes[25], [`Scores`, `Classical`]],
+            [nodes[25], nodes[23], [`Classical`, `International`]],
+            [nodes[26], nodes[23], [`Traditional`, `International`]],
+            [nodes[19], nodes[23], [`Latin`, `International`]],
+        ];
+
+        for (let i = 0; i < edges.length; i++) {
+            var genreedge = svgContainer
+                .append("line")
+                .attr("x1", edges[i][0][0])
+                .attr("y1", edges[i][0][1])
+                .attr("x2", edges[i][1][0])
+                .attr("y2", edges[i][1][1])
+                .attr('stroke', '#555555')
+                .style('stroke-width', 2);
+        }
+
+        for (let i = 0; i < edges.length; i++) {
+            var genreedge = svgContainer
+                .append("line")
+                .attr("x1", edges[i][0][0])
+                .attr("y1", edges[i][0][1])
+                .attr("x2", edges[i][1][0])
+                .attr("y2", edges[i][1][1])
+                .attr('stroke', ((genrepath.indexOf(edges[i][2][0]) != -1) && (genrepath.indexOf(edges[i][2][1]) != -1)) ? '#ffffff' : 'rgba(0,0,0,0)')
+                .style('stroke-width', 2);
+        }
+        
+        for (let i = 0; i < nodes.length; i++) {
+            var genrenode = svgContainer
+                .append("ellipse")
+                .attr("cx", nodes[i][0])
+                .attr("cy", nodes[i][1])
+                .attr("rx", 75)
+                .attr("ry", 25)
+                .attr('stroke', genrepath.indexOf(Object.keys(albums)[i]) == 0 ? 'url(#startGradient)' : genrepath.indexOf(Object.keys(albums)[i]) == (genrepath.length-1) ? 'url(#endGradient)' : genrepath.indexOf(Object.keys(albums)[i]) != -1 ? '#ffffff' : '#555555')
+                .attr('fill', '#000000')
+                .style('stroke-width', 2)
+                .on('click', function() {
+                    backdrop = document.getElementById('genreCanvas');
+                    modal = document.getElementById('genreModal');
+                    modal.style.display = 'block';
+                    modal.style.left = `${d3.select(this).attr('cx')-15}px`;
+                    modal.style.top = `${d3.select(this).attr('cy')}px`;
+                    document.getElementById('genreName').innerHTML = Object.keys(albums)[i];
+                    document.getElementById('genreSummary').innerHTML = `${albums[Object.keys(albums)[i]]}`;
+                    document.getElementById('genreAlbum1').innerHTML = `${albums[Object.keys(albums)[i]][0]}`;
+                    document.getElementById('genreAlbum2').innerHTML = `${albums[Object.keys(albums)[i]][1]}`;
+                    document.getElementById('genreAlbum3').innerHTML = `${albums[Object.keys(albums)[i]][2]}`;
+                    document.getElementById('albumimg1').src = `albumcovers/${albums[Object.keys(albums)[i]][0].toLowerCase().split(':')[1].replaceAll(' ','').replaceAll('/', '').replaceAll('.', '').replaceAll('!', '').replaceAll(':', '').replaceAll(',', '').replaceAll('&', '').replaceAll("'", '')}.jpg`;
+                    document.getElementById('albumimg2').src = `albumcovers/${albums[Object.keys(albums)[i]][1].toLowerCase().split(':')[1].replaceAll(' ','').replaceAll('/', '').replaceAll('.', '').replaceAll('!', '').replaceAll(':', '').replaceAll(',', '').replaceAll('&', '').replaceAll("'", '')}.jpg`;
+                    document.getElementById('albumimg3').src = `albumcovers/${albums[Object.keys(albums)[i]][2].toLowerCase().split(':')[1].replaceAll(' ','').replaceAll('/', '').replaceAll('.', '').replaceAll('!', '').replaceAll(':', '').replaceAll(',', '').replaceAll('&', '').replaceAll("'", '')}.jpg`;
+                    backdrop.style.display = `block`;})
+                .on('mouseover', function() { d3.select(this).style('stroke-opacity', 1); d3.select(this).style('filter', `Brightness(150%)`);})
+                .on('mouseout', function() { d3.select(this).style('stroke-opacity', 1); d3.select(this).style('filter', `Brightness(100%)`);});
+            var name = svgContainer.append('text').attr('x', nodes[i][0]-(4*(Object.keys(albums)[i].length))).attr('y', nodes[i][1]).attr('dy', `.35em`).attr('font-size', `15px`).attr('font-family', `ShareTechMono`).text(`${Object.keys(albums)[i]}`).style('fill', genrepath.indexOf(Object.keys(albums)[i]) != -1 ? '#ffffff' : '#555555');      
+        }
+
+        var span = document.getElementsByClassName('close')[0];
+        span.onclick = function() {
+            backdrop.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == backdrop) {
+                backdrop.style.display = 'none';
+            }
+        }
+    </script>
+
+   
+</body>
+
+<footer>
+    <div class='footbar'>
+        HipsterTrek © 2021 &nbsp;
+    </div>
+</footer>
+  
+</html> 
