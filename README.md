@@ -4,7 +4,7 @@ An Implementation Based DSA Final Project
 
 Tolulope Oshinowo (he/him/his)
 
-![HipsterTrek Screenshot](hipstertrekscreenshot.png)
+![HipsterTrek Demo Gif](hipstertrek-demo.gif)
 
 **References:**
 https://musicmap.info/
@@ -21,12 +21,12 @@ Below is a timeline for this project:
 ---
 
 *April:*
-4/14/2021: Finalize Graph Architecture.
-4/17/2021: Finalize Traversal Algorithm.
-4/19/2021: Implement a Dataset into the Graph and test traversal.
-4/21/2021: Begin work on visualization.
-4/26/2021: Set up a database to store individual graphs.
-4/28/2021: Connect front end (visualization) to back end (algorithm and graph data).
+4/14/2021: Finalize Graph Architecture.    
+4/17/2021: Finalize Traversal Algorithm.    
+4/19/2021: Implement a Dataset into the Graph and test traversal.    
+4/21/2021: Begin work on visualization.    
+4/26/2021: Set up a database to store individual graphs.    
+4/28/2021: Connect front end (visualization) to back end (algorithm and graph data).    
 
 *May:*
-Time in May will be used to debug, compile deliverables, and produce presentation.
+Time in May will be used to debug, compile deliverables, and produce presentation.    

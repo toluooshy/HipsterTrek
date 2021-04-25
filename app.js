@@ -18,6 +18,8 @@ app.set('view engine', 'ejs');
 app.use('/', routes);
 
 app.post('/console', function(req, res) {
+  var startgenre = req.body.start.toLowerCase();
+  var endgenre = req.body.end.toLowerCase();
   async function fetch(){
     var payload = [];
     class PriorityQueue {
@@ -104,92 +106,92 @@ app.post('/console', function(req, res) {
     }
 
     let map = new Graph();
-    map.addnode("Rap");
-    map.addnode("DrumNBass");
-    map.addnode("RNB");
-    map.addnode("Pop");
-    map.addnode("Rock");
-    map.addnode("Gospel");
-    map.addnode("Industrial");
-    map.addnode("Metal");
-    map.addnode("LoFi");
-    map.addnode("Reggae");
-    map.addnode("Funk");
-    map.addnode("EDM");
-    map.addnode("Jazz");
-    map.addnode("Blues");
-    map.addnode("Country");
-    map.addnode("Latin");
-    map.addnode("Theatre");
-    map.addnode("International");
-    map.addnode("Hynms");
-    map.addnode("Classical");
-    map.addnode("Scores");
-    map.addnode("Alternative");
-    map.addnode("Band");
-    map.addnode("Traditional");
-    map.addnode("Grunge");
-    map.addnode("Mowtown");
-    map.addnode("Folk");
+    map.addnode("rap");
+    map.addnode("drumandbass");
+    map.addnode("randb");
+    map.addnode("pop");
+    map.addnode("rock");
+    map.addnode("gospel");
+    map.addnode("industrial");
+    map.addnode("metal");
+    map.addnode("lofi");
+    map.addnode("reggae");
+    map.addnode("funk");
+    map.addnode("edm");
+    map.addnode("jazz");
+    map.addnode("blues");
+    map.addnode("country");
+    map.addnode("latin");
+    map.addnode("theatre");
+    map.addnode("world");
+    map.addnode("hymns");
+    map.addnode("classical");
+    map.addnode("scores");
+    map.addnode("alternative");
+    map.addnode("band");
+    map.addnode("traditional");
+    map.addnode("grunge");
+    map.addnode("motown");
+    map.addnode("folk");
 
     // Core Genre Loop
-    map.addedge("DrumNBass", "Industrial", 3);
-    map.addedge("Industrial", "Rock", 3);
-    map.addedge("Rock", "Pop", 3);
-    map.addedge("Pop", "Country", 3);
-    map.addedge("Country", "Blues", 3);
-    map.addedge("Blues", "Mowtown", 3);
-    map.addedge("Mowtown", "Jazz", 3);
-    map.addedge("Jazz", "Reggae", 3);
-    map.addedge("Reggae", "Rap", 3);
-    map.addedge("Rap", "DrumNBass", 3);
+    map.addedge("drumandbass", "industrial", 3);
+    map.addedge("industrial", "rock", 3);
+    map.addedge("rock", "pop", 3);
+    map.addedge("pop", "country", 3);
+    map.addedge("country", "blues", 3);
+    map.addedge("blues", "motown", 3);
+    map.addedge("motown", "jazz", 3);
+    map.addedge("jazz", "reggae", 3);
+    map.addedge("reggae", "rap", 3);
+    map.addedge("rap", "drumandbass", 3);
 
     // Intertwined Genres
-    map.addedge("Metal", "Industrial", 3);
-    map.addedge("Metal", "Rock", 3);
-    map.addedge("Grunge", "Rock", 3);
-    map.addedge("Grunge", "Alternative", 3);
-    map.addedge("Alternative", "Pop", 3);
-    map.addedge("Alternative", "Country", 3);
-    map.addedge("Alternative", "Folk", 3);
-    map.addedge("Folk", "Country", 3);
-    map.addedge("Folk", "Theatre", 3);
-    map.addedge("Folk", "Hynms", 3);
-    map.addedge("Folk", "Rock", 3);
-    map.addedge("Hynms", "Traditional", 3);
-    map.addedge("Hynms", "Classical", 3);
-    map.addedge("Hynms", "Gospel", 3);
-    map.addedge("Traditional", "International", 3);
-    map.addedge("Classical", "Scores", 3);
-    map.addedge("Classical", "International", 3);
-    map.addedge("Classical", "Band", 3);
-    map.addedge("International", "Latin", 3);
-    map.addedge("International", "EDM", 3);
-    map.addedge("Theatre", "Scores", 3);
-    map.addedge("Theatre", "Band", 3);
-    map.addedge("Theatre", "Mowtown", 3);
-    map.addedge("Theatre", "Gospel", 3);
-    map.addedge("Latin", "Reggae", 3);
-    map.addedge("Latin", "Rap", 3);
-    map.addedge("Band", "Jazz", 3);
-    map.addedge("Mowtown", "Blues", 3);
-    map.addedge("Mowtown", "Gospel", 3);
-    map.addedge("Mowtown", "Jazz", 3);
-    map.addedge("Blues", "Gospel", 3);
-    map.addedge("Blues", "RNB", 3);
-    map.addedge("Gospel", "RNB", 3);
-    map.addedge("Funk", "Jazz", 3);
-    map.addedge("Funk", "RNB", 3);
-    map.addedge("LoFi", "Rap", 3);
-    map.addedge("LoFi", "DrumNBass", 3);
-    map.addedge("EDM", "DrumNBass", 3);
-    map.addedge("EDM", "Pop", 3);
-    map.addedge("RNB", "Jazz", 3);
-    map.addedge("RNB", "Rap", 3);
+    map.addedge("metal", "industrial", 3);
+    map.addedge("metal", "rock", 3);
+    map.addedge("grunge", "rock", 3);
+    map.addedge("grunge", "alternative", 3);
+    map.addedge("alternative", "pop", 3);
+    map.addedge("alternative", "country", 3);
+    map.addedge("alternative", "folk", 3);
+    map.addedge("folk", "country", 3);
+    map.addedge("folk", "theatre", 3);
+    map.addedge("folk", "hymns", 3);
+    map.addedge("folk", "rock", 3);
+    map.addedge("hymns", "traditional", 3);
+    map.addedge("hymns", "classical", 3);
+    map.addedge("hymns", "gospel", 3);
+    map.addedge("traditional", "world", 3);
+    map.addedge("classical", "scores", 3);
+    map.addedge("classical", "world", 3);
+    map.addedge("classical", "band", 3);
+    map.addedge("world", "latin", 3);
+    map.addedge("world", "edm", 3);
+    map.addedge("theatre", "scores", 3);
+    map.addedge("theatre", "band", 3);
+    map.addedge("theatre", "motown", 3);
+    map.addedge("theatre", "gospel", 3);
+    map.addedge("latin", "reggae", 3);
+    map.addedge("latin", "rap", 3);
+    map.addedge("band", "jazz", 3);
+    map.addedge("motown", "blues", 3);
+    map.addedge("motown", "gospel", 3);
+    map.addedge("motown", "jazz", 3);
+    map.addedge("blues", "gospel", 3);
+    map.addedge("blues", "randb", 3);
+    map.addedge("gospel", "randb", 3);
+    map.addedge("funk", "jazz", 3);
+    map.addedge("funk", "randb", 3);
+    map.addedge("lofi", "rap", 3);
+    map.addedge("lofi", "drumandbass", 3);
+    map.addedge("edm", "drumandbass", 3);
+    map.addedge("edm", "pop", 3);
+    map.addedge("randb", "jazz", 3);
+    map.addedge("randb", "rap", 3);
 
     // Leaf Genres (add leaves to the aformentioned genres)
 
-    payload = map.dijkstra(req.body.start,req.body.end);
+    payload = map.dijkstra(startgenre,endgenre);
     res.render('console', {data:payload});
 
   }
@@ -215,6 +217,6 @@ app.use('/', function(req, res, next){
   res.type('txt').send('Not found');
 });
 
-app.listen(process.env.PORT || 8000, () => {
-  console.log(`Server listening at http://localhost:8000`)
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`Server listening at http://localhost:5000`)
 });

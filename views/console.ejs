@@ -17,6 +17,7 @@
             color: #eeeeee;
             margin: auto;
             padding: 0;
+            height: 1200px;
         }
         .navbar {
             width: 100%;
@@ -51,7 +52,6 @@
             width: 100%;
             padding: 5px 0px;
             font-size: 12px;
-           
         }
         #container {
             position: absolute;
@@ -80,11 +80,13 @@
             display: none;
             position: absolute;
             color: #ffffff;
-            margin: 0px;
+            padding: 10px;
+            margin: 10px;
             font-size: large;
             background-color: rgba(0,0,0,0.8);
             padding: 10px;
-            width: fit-content;
+            width: 650px;
+            height: fit-content;
             border-radius: 25px;
             border: 2px solid #ffffff;
         }
@@ -118,7 +120,7 @@
                 <td><div id='canvas' style="width: fit-content;"></div></td>
                 <td><iframe src="https://open.spotify.com/embed/artist/2zu4O5MNLn9MTmm4OM2Yz1" width="225" height="400" frameborder="0" allowtransparency="true" allow="encrypted-media" style="padding-right: 10px; margin: 0px;"></iframe></td>
             </tr>
-            <tr><td>gg</td></tr>
+            <tr><td> </td></tr>
         </tbody>
     </table>
     
@@ -130,6 +132,7 @@
             <h5 style='margin: 0px 0px 10px 0px; font-size: large;' id='genreName'>Genre</h5>
             <p style='margin: 0px; font-size: smaller; font-style: italic;'>Summary: </p>
             <p style='margin: 0px; font-size: medium;' id='genreSummary'>null</p>
+            <p style='margin: 0px; font-size: x-small;''>Summary sourced from Wikipedia.</p>
             <br/>
             <p style='margin: 0px; font-size: smaller; font-style: italic;'>Albums From This Genre: </p>
             <p style='margin: 0px; font-size: medium;' id='genreAlbum1'>null</p>
@@ -200,34 +203,94 @@
 
         var payload = <%- JSON.stringify(data) %>;
 
+        const genrenames = {
+            drumandbass: `Drum&Bass`,
+            industrial: `Industrial`,
+            grunge: `Grunge`,
+            rap: `Rap`,
+            lofi: `Lo-Fi`,
+            metal: `Metal`,
+            rock: `Rock`,
+            reggae: `Reggae`,
+            randb: `R&B`,
+            edm: `EDM`,
+            pop: `Pop`,
+            jazz: `Jazz`,
+            funk: `Funk`,
+            gospel: `Gospel`,
+            country: `Country`,
+            alternative: `Alternative`,
+            motown: `Motown`,
+            blues: `Blues`,
+            folk: `Folk`,
+            latin: `Latin`,
+            theatre: `Theatre`,
+            hymns: `Hymns`,
+            band: `Band`,
+            world: `World`,
+            scores: `Scores`,
+            classical: `Classical`,
+            traditional: `Traditional`,  
+        };
+
         const albums = {
-            DrumNBass: [`Photek:\nModus Operandi`, `Goldie:\nTimeless`, `Workforce:\nLate Night Soundtrack`],
-            Industrial: [`Nine Inch Nails:\nPretty Hate Machine`, `Coil:\nHorse Rotorvator`, `Poppy:\nI Disagree`],
-            Grunge: [`Nirvana:\nNevermind`, `Hole:\nLive Through This`, `Pixies:\nTrompe le Monde`],
-            Rap: [`Jay-Z:\nThe Blueprint`, `Kanye West:\nLate Registration`, `Lauryn Hill:\nThe Miseducation of Lauryn Hill`],
-            LoFi: [`Neutral Milk Hotel:\nIn the Aeroplane Over the Sea`, `The Microphones:\nThe Glow Pt.2`, `Grimes:\nArt Angels`],
-            Metal: [`Metallica:\nMaster of Puppets`, `Black Sabbath:\nParanoid`, `Iron Maiden:\nPowerslave`],
-            Rock: [`The Beatles:\nAbbey Road`, `Pink Floyd:\nThe Dark Side of the Moon`, `Aerosmith:\nAerosmith`],
-            Reggae: [`Bob Marley and the Wailers:\nLegend`, `Toots and the Maytals:\nFunky Kingston`, `The Congos:\nHeart of the Congos`],
-            RNB: [`Frank Ocean:\nBlond`, `Solange:\nA Seat At The Table`, `Usher:\nConfessions`],
-            EDM: [`Daft Punk:\nRandom Access Memories`, `Flume:\nSkin`, `Jack Ü:\nSkrillex and Diplo Present Jack Ü`],
-            Pop: [`Michael Jackson:\nThriller`, `Dua Lipa:\nFuture Nostalgia`, `Lady Gaga:\nArtpop`],
-            Jazz: [`John Coltrane:\nA Love Supreme`, `Stan Getz:\nGetz/Gilberto`, `Aretha Franklin:\nGreatest Hits`],
-            Funk: [`Rick James:\nStreet Songs`, `Herbie Hancock:\nHead Hunters`, `George Duke:\nGaurdian of the Light`],
-            Gospel: [`Kirk Franklin:\nThe Rebirth of Kirk Franklin`, `Sunday Service Choir:\nJesus Is Born`, `Various Artists:\nEMI Gospel 2010`],
-            Country: [`Johnny Cash:\nAt Folsom Prison`, `Taylor Swift:\nFearless`, `Blake Shelton:\nRed River Blue`],
-            Alternative: [`Radiohead:\nOK Computer`, `Weezer:\nWeezer`, `Panic! At The Disco:\nA Fever You Can't Sweat Out`],
-            Mowtown: [`Marvin Gaye:\nWhat's Going On`, `The Marcels:\nBlue Moon`, `The Jackson 5:\nDiana Ross Presents The Jackson 5`],
-            Blues: [`Nina Simone:\nWild Is the Wind`, `Bobby Caldwell:\nBobby Caldwell`, `B.B. King:\nB.B. King Live at the Regal`],
-            Folk: [`John Denver:\nPoems, Prayers & Promises`, `Shirley Collins:\nHeart's Ease`, `Woody Guthrie:\nDust Bowl Ballads`],
-            Latin: [`Bad Bunny:\nYHLQMDLG`, `Selena:\nDreaming of You`, `Gente de Zona:\nVisualízate`],
-            Theatre: [`Lin-Manuel Miranda:\nHamilton`, `Claude-Michel Schönberg:\nLes Misérables`, `Jerry Herman:\nHello, Dolly!`],
-            Hynms: [`Choir of King’s College, Cambridge:\nBest Loved Hymns`, `Don Moen:\nHymnbook`, `Joey + Rory:\nHymns`],
-            Band: [`John Philip Sousa:\nAmerican Military Marches`, `Duke Ellington:\nEllington at Newport`, `Frank Sinatra:\nCome Fly with Me`],
-            International: [`Drake:\nMore Life`, `Imran Khan:\nUnforgettable`, `Gims:\nCeinture Noire`],
-            Scores: [`John Williams:\nJurassic Park: Original Motion Picture Soundtrack`, `Hans Zimmer:\nThe Dark Knight: Original Motion Picture Soundtrack`, `Michael Giacchino:\nRatatouille`],
-            Classical: [`Yo-Yo Ma:\nSongs of Joy and Peace`, `Wolfgang Amadeus Mozart:\nMozart in the Morning`, `Ludwig van Beethoven:\nThe Best of Beethoven`],
-            Traditional: [`Yggdrasil:\nWardruna Runaljod`, `Ebenezer Obey:\nJuju Jubilee`, `Duo En:\nMoonviewing`],  
+            drumandbass: [`Photek:\nModus Operandi`, `Goldie:\nTimeless`, `Workforce:\nLate Night Soundtrack`],
+            industrial: [`Nine Inch Nails:\nPretty Hate Machine`, `Coil:\nHorse Rotorvator`, `poppy:\nI Disagree`],
+            grunge: [`Nirvana:\nNevermind`, `Hole:\nLive Through This`, `Pixies:\nTrompe le Monde`],
+            rap: [`Jay-Z:\nThe Blueprint`, `Kanye West:\nLate Registration`, `Lauryn Hill:\nThe Miseducation of Lauryn Hill`],
+            lofi: [`Neutral Milk Hotel:\nIn the Aeroplane Over the Sea`, `The Microphones:\nThe Glow Pt.2`, `Grimes:\nArt Angels`],
+            metal: [`metallica:\nMaster of Puppets`, `Black Sabbath:\nParanoid`, `Iron Maiden:\nPowerslave`],
+            rock: [`The Beatles:\nAbbey Road`, `Pink Floyd:\nThe Dark Side of the Moon`, `Aerosmith:\nAerosmith`],
+            reggae: [`Bob Marley and the Wailers:\nLegend`, `Toots and the Maytals:\nfunky Kingston`, `The Congos:\nHeart of the Congos`],
+            randb: [`Frank Ocean:\nBlond`, `Solange:\nA Seat At The Table`, `Usher:\nConfessions`],
+            edm: [`Daft Punk:\nRandom Access Memories`, `Flume:\nSkin`, `Jack Ü:\nSkrillex and Diplo Present Jack Ü`],
+            pop: [`Michael Jackson:\nThriller`, `Dua Lipa:\nFuture Nostalgia`, `Lady Gaga:\nArtpop`],
+            jazz: [`John Coltrane:\nA Love Supreme`, `Stan Getz:\nGetz/Gilberto`, `Aretha Franklin:\nGreatest Hits`],
+            funk: [`Rick James:\nStreet Songs`, `Herbie Hancock:\nHead Hunters`, `George Duke:\nGaurdian of the Light`],
+            gospel: [`Kirk Franklin:\nThe Rebirth of Kirk Franklin`, `Sunday Service Choir:\nJesus Is Born`, `Various Artists:\nEMI gospel 2010`],
+            country: [`Johnny Cash:\nAt Folsom Prison`, `Taylor Swift:\nFearless`, `Blake Shelton:\nRed River Blue`],
+            alternative: [`Radiohead:\nOK Computer`, `Weezer:\nWeezer`, `Panic! At The Disco:\nA Fever You Can't Sweat Out`],
+            motown: [`Marvin Gaye:\nWhat's Going On`, `The Marcels:\nBlue Moon`, `The Jackson 5:\nDiana Ross Presents The Jackson 5`],
+            blues: [`Nina Simone:\nWild Is the Wind`, `Bobby Caldwell:\nBobby Caldwell`, `B.B. King:\nB.B. King Live at the Regal`],
+            folk: [`John Denver:\nPoems, Prayers & Promises`, `Shirley Collins:\nHeart's Ease`, `Woody Guthrie:\nDust Bowl Ballads`],
+            latin: [`Bad Bunny:\nYHLQMDLG`, `Selena:\nDreaming of You`, `Gente de Zona:\nVisualízate`],
+            theatre: [`Lin-Manuel Miranda:\nHamilton`, `Claude-Michel Schönberg:\nLes Misérables`, `Jerry Herman:\nHello, Dolly!`],
+            hymns: [`Choir of King’s College, Cambridge:\nBest Loved hymns`, `Don Moen:\nHymnbook`, `Joey + Rory:\nhymns`],
+            band: [`John Philip Sousa:\nAmerican Military Marches`, `Duke Ellington:\nEllington at Newport`, `Frank Sinatra:\nCome Fly with Me`],
+            world: [`Drake:\nMore Life`, `Imran Khan:\nUnforgettable`, `Gims:\nCeinture Noire`],
+            scores: [`John Williams:\nJurassic Park: Original Motion Picture Soundtrack`, `Hans Zimmer:\nThe Dark Knight: Original Motion Picture Soundtrack`, `Michael Giacchino:\nRatatouille`],
+            classical: [`Yo-Yo Ma:\nSongs of Joy and Peace`, `Wolfgang Amadeus Mozart:\nMozart in the Morning`, `Ludwig van Beethoven:\nThe Best of Beethoven`],
+            traditional: [`Yggdrasil:\nWardruna Runaljod`, `Ebenezer Obey:\nJuju Jubilee`, `Duo En:\nMoonviewing`],  
+        };
+
+        const summaries = {
+            drumandbass: `Drum and bass is a genre of electronic music characterised by fast breakbeats with heavy bass and sub-bass lines, samples, and synthesizers. The genre grew out of the UK's jungle scene in the early 1990s. The popularity of drum and bass at its commercial peak ran parallel to several other homegrown dance styles.`,
+            industrial: `Industrial music is a genre of music that draws on harsh, transgressive or provocative sounds and themes. AllMusic defines industrial music as the "most abrasive and aggressive fusion of rock and electronic music" that was "initially a blend of avant-garde electronics experiments and punk provocation".`,
+            grunge: `Grunge is an alternative rock genre and subculture that emerged during the mid-1980s in the American Pacific Northwest state of Washington, particularly in Seattle and nearby towns. Grunge fuses elements of punk rock and heavy metal, but without punk's structure and speed.`,
+            rap: `Hip hop music, also known as rap music, is a genre of popular music developed in the United States by inner-city African Americans and Latino Americans in the Bronx borough of New York City in the 1970s. It consists of a stylized rhythmic music that commonly accompanies rapping, a rhythmic and rhyming speech that is chanted.`,
+            lofi: `Lo-fi is a music or production quality in which elements usually regarded as imperfections of a recording or performance are audible, sometimes as a deliberate aesthetic choice.`,
+            metal: `Heavy metal is a genre of rock music that developed in the late 1960s and early 1970s, largely in the United Kingdom and the United States. With roots in blues rock, psychedelic rock, and acid rock, heavy metal bands developed a thick, massive sound, characterized by distortion, extended guitar solos, emphatic beats, and loudness.`,
+            rock: `Rock music is a broad genre of popular music that originated as "rock and roll" in the United States in the late 1940s and early 1950s, developing into a range of different styles in the mid-1960s and later, particularly in the United States and the United Kingdom. It has its roots in 1940s and 1950s rock and roll, a style that drew directly from the blues and rhythm and blues genres of African-American music and from country music.`,
+            reggae: `Reggae is a music genre that originated in Jamaica in the late 1960s. The term also denotes the modern popular music of Jamaica and its diaspora.`,
+            randb: `Contemporary R&B is a music genre that combines rhythm and blues with elements of pop, soul, funk, hip hop and electronic music. The genre features a distinctive record production style, drum machine-backed rhythms, pitch corrected vocals, and a smooth, lush style of vocal arrangement.`,
+            edm: `Electronic dance music, also known as dance music, club music, or simply dance, is a broad range of percussive electronic music genres made largely for nightclubs, raves, and festivals.`,
+            pop: `Pop is a genre of popular music that originated in its modern form during the mid-1950s in the United States and the United Kingdom. The terms popular music and pop music are often used interchangeably, although the former describes all music that is popular and includes many disparate styles.`,
+            jazz: `Jazz is a music genre that originated in the African-American communities of New Orleans, Louisiana, United States, in the late 19th and early 20th centuries, with its roots in blues and ragtime. Since the 1920s Jazz Age, it has been recognized as a major form of musical expression in traditional and popular music, linked by the common bonds of African-American and European-American musical parentage.`,
+            funk: `Funk is a music genre that originated in African American communities in the mid-1960s when musicians created a rhythmic, danceable new form of music through a mixture of soul, jazz, and rhythm and blues.`,
+            gospel: `Gospel music is a genre of Christian music. The creation, performance, significance, and even the definition of gospel music varies according to culture and social context. Gospel music is composed and performed for many purposes, including aesthetic pleasure, religious or ceremonial purposes, and as an entertainment product for the marketplace.`,
+            country: `Country is a genre of popular music that originated with blues, old-time music, and various types of American folk music including Appalachian, Cajun, Creole, and the cowboy Western music styles of New Mexico, Red Dirt, Tejano, and Texas country.`,
+            alternative: `Alternative rock is a category of rock music that emerged from the independent music underground of the 1970s and became widely popular in the 1990s. "Alternative" refers to the genre's distinction from mainstream or commercial rock or pop music.`,
+            motown: `Motown, or the Motown sound, is a style of rhythm and blues music named after the record company Motown in Detroit, where teams of songwriters and musicians produced material for girl groups, boy bands, and solo singers during the 1960s and early 1970s. The music of Motown helped a small record company become the largest Black American-owned enterprise in the country and a national music industry competitor in the United States.`,
+            blues: `Blues is a music genre and musical form which was originated in the Deep South of the United States around the 1860s by African-Americans from roots in African-American work songs, and spirituals. Blues incorporated spirituals, work songs, field hollers, shouts, chants, and rhymed simple narrative ballads.`,
+            folk: `Folk music includes traditional folk music and the genre that evolved from it during the 20th-century folk revival. Traditional folk music has been defined in several ways: as music transmitted orally, music with unknown composers, music that is played on traditional instruments, music about cultural or national identity, music that changes between generations (folk process), music associated with a people's folklore or music performed by custom over a long period of time.`,
+            latin: `Latin music is a term used by the music industry as a catch-all genre for various styles of music from Latin America, Spain, Portugal, and the United States, as well as music sung in Spanish or Portuguese language. Because the majority of Latino immigrants living in New York City in the 1950s were of Puerto Rican or Cuban descent, "Latin music" had been stereotyped as music simply originating from the Spanish Caribbean.`,
+            theatre: `Theatre music refers to a wide range of music composed or adapted for performance in theatres. Genres of theatre music include opera, ballet and several forms of musical theatre, from pantomime to operetta and modern stage musicals and revues.`,
+            hymns: `A hymn is a type of song, usually religious, specifically written for the purpose of adoration or prayer, and typically addressed to a deity or deities, or to a prominent figure or personification. The word hymn derives from Greek ὕμνος (hymnos), which means "a song of praise".`,
+            band: `A concert band, variously also called a wind ensemble, symphonic band, wind symphony, wind orchestra, wind band, symphonic winds, symphony band, or symphonic wind ensemble, is a performing ensemble consisting of members of the woodwind, brass, and percussion families of instruments, and occasionally including the double bass or bass guitar. On rare occasions, additional non-traditional instruments may be added to such ensembles such as piano, harp, synthesizer, or electric guitar.`,
+            world: `World music is a musical category encompassing many different styles of music from around the world, including traditional music, quasi-traditional music, and music where more than one cultural tradition intermingles.`, 
+            scores: `A film score is original music written specifically to accompany a film. The score comprises a number of orchestral, instrumental, or choral pieces called cues, which are timed to begin and end at specific points during the film in order to enhance the dramatic narrative and the emotional impact of the scene in question.`,
+            classical: `Classical music is art music produced or rooted in the traditions of Western culture, including both liturgical (religious) and secular music. Historically, the term 'classical music' refers specifically to the musical period from 1750 to 1820 (the Classical period).`,
+            traditional: `The term traditional music is often used as a broad classification of music genres that contrasts with classical music and popular music genres as referring to genres founded neither upon any theoretical canon nor upon any mass commercial medium. The term has tended to replace folk music, which has come to refer to European rural genres and contemporary American styles based upon these.`,  
         };
 
         var genrepath = [];
@@ -238,87 +301,87 @@
             genrealbums.push(albums[payload[0][i]]);
         }
 
-        document.getElementById('title').innerHTML = `Your Music Trek: From ${genrepath[0]} to ${genrepath[genrepath.length-1]}`;
+        document.getElementById('title').innerHTML = `Your Music Trek: From ${genrenames[genrepath[0]]} to ${genrenames[genrepath[genrepath.length-1]]}`;
 
         const nodes = [
-            [190, 100],     // DrumNBass
-            [390, 50],      // Industrial
-            [840, 75],      // Grunge
-            [140, 175],     // Rap
-            [365, 125],     // LoFi
-            [527.5, 150],   // Metal
-            [702.5, 162.5], // Rock
-            [90, 250],      // Reggae
-            [315, 275],     // RNB
-            [565, 250],     // EDM
-            [727.5, 250],   // Pop
-            [115, 362.5],   // Jazz
-            [315, 200],     // Funk
-            [465, 300],     // Gospel
-            [665, 337.5],   // Country
-            [827.5, 325],   // Alternative
-            [202.5, 450],   // Mowtown
-            [390, 400],     // Blues
-            [1015, 387.5],  // Folk
-            [365, 500],     // Latin
-            [602.5, 487.5], // Theatre
-            [802.5, 487.5], // Hynms
-            [90, 600],      // Band
-            [490, 600],     // International
-            [640, 550],     // Scores
-            [690, 662.5],   // Classical
-            [840, 575],     // Traditional
+            [190, 100],     // drumandbass
+            [390, 50],      // industrial
+            [840, 75],      // grunge
+            [140, 175],     // rap
+            [365, 125],     // lofi
+            [527.5, 150],   // metal
+            [702.5, 162.5], // rock
+            [90, 250],      // reggae
+            [315, 275],     // randb
+            [565, 250],     // edm
+            [727.5, 250],   // pop
+            [115, 362.5],   // jazz
+            [315, 200],     // funk
+            [465, 300],     // gospel
+            [665, 337.5],   // country
+            [827.5, 325],   // alternative
+            [202.5, 450],   // motown
+            [390, 400],     // blues
+            [1015, 387.5],  // folk
+            [365, 500],     // latin
+            [602.5, 487.5], // theatre
+            [802.5, 487.5], // hymns
+            [90, 600],      // band
+            [490, 600],     // world
+            [640, 550],     // scores
+            [690, 662.5],   // classical
+            [840, 575],     // traditional
         ];
 
         const edges = [
-            [nodes[0], nodes[1], [`DrumNBass`, `Industrial`]],
-            [nodes[1], nodes[5], [`Industrial`, `Metal`]],
-            [nodes[1], nodes[6], [`Industrial`, `Rock`]],
-            [nodes[6], nodes[5], [`Rock`, `Metal`]],
-            [nodes[2], nodes[6], [`Grunge`, `Rock`]],
-            [nodes[2], nodes[15], [`Grunge`, `Alternative`]],
-            [nodes[0], nodes[3], [`DrumNBass`, `Rap`]],
-            [nodes[3], nodes[7], [`Rap`, `Reggae`]],
-            [nodes[11], nodes[16], [`Jazz`, `Mowtown`]],
-            [nodes[0], nodes[9], [`DrumNBass`, `EDM`]],
-            [nodes[0], nodes[4], [`DrumNBass`, `LoFi`]],
-            [nodes[3], nodes[4], [`Rap`, `LoFi`]],
-            [nodes[3], nodes[8], [`Rap`, `RNB`]],
-            [nodes[11], nodes[12], [`Jazz`, `Funk`]],
-            [nodes[8], nodes[12], [`RNB`, `Funk`]],
-            [nodes[8], nodes[17], [`RNB`, `Blues`]],
-            [nodes[7], nodes[11], [`Reggae`, `Jazz`]],
-            [nodes[16], nodes[13], [`Mowtown`, `Gospel`]],
-            [nodes[13], nodes[17], [`Gospel`, `Blues`]],
-            [nodes[13], nodes[20], [`Gospel`, `Theatre`]],
-            [nodes[13], nodes[21], [`Gospel`, `Hynms`]],
-            [nodes[13], nodes[8], [`Gospel`, `RNB`]],
-            [nodes[16], nodes[17], [`Mowtown`, `Blues`]],
-            [nodes[16], nodes[20], [`Mowtown`, `Theatre`]],
-            [nodes[11], nodes[22], [`Jazz`, `Band`]],
-            [nodes[22], nodes[20], [`Band`, `Theatre`]],
-            [nodes[22], nodes[25], [`Band`, `Classical`]],
-            [nodes[19], nodes[3], [`Latin`, `Rap`]],
-            [nodes[19], nodes[7], [`Latin`, `Reggae`]],
-            [nodes[9], nodes[10], [`EDM`, `Pop`]],
-            [nodes[9], nodes[23], [`EDM`, `International`]],
-            [nodes[10], nodes[6], [`Pop`, `Rock`]],
-            [nodes[10], nodes[14], [`Pop`, `Country`]],
-            [nodes[10], nodes[15], [`Pop`, `Alternative`]],
-            [nodes[17], nodes[14], [`Blues`, `Country`]],
-            [nodes[15], nodes[14], [`Alternative`, `Country`]],
-            [nodes[18], nodes[14], [`Folk`, `Country`]],
-            [nodes[18], nodes[15], [`Folk`, `Alternative`]],
-            [nodes[18], nodes[20], [`Folk`, `Theatre`]],
-            [nodes[18], nodes[21], [`Folk`, `Hynms`]],
-            [nodes[18], nodes[6], [`Folk`, `Rock`]],
-            [nodes[21], nodes[25], [`Hynms`, `Classical`]],
-            [nodes[21], nodes[26], [`Hynms`, `Traditional`]],
-            [nodes[24], nodes[20], [`Scores`, `Theatre`]],
-            [nodes[24], nodes[25], [`Scores`, `Classical`]],
-            [nodes[25], nodes[23], [`Classical`, `International`]],
-            [nodes[26], nodes[23], [`Traditional`, `International`]],
-            [nodes[19], nodes[23], [`Latin`, `International`]],
+            [nodes[0], nodes[1], [`drumandbass`, `industrial`]],
+            [nodes[1], nodes[5], [`industrial`, `metal`]],
+            [nodes[1], nodes[6], [`industrial`, `rock`]],
+            [nodes[6], nodes[5], [`rock`, `metal`]],
+            [nodes[2], nodes[6], [`grunge`, `rock`]],
+            [nodes[2], nodes[15], [`grunge`, `alternative`]],
+            [nodes[0], nodes[3], [`drumandbass`, `rap`]],
+            [nodes[3], nodes[7], [`rap`, `reggae`]],
+            [nodes[11], nodes[16], [`jazz`, `motown`]],
+            [nodes[0], nodes[9], [`drumandbass`, `edm`]],
+            [nodes[0], nodes[4], [`drumandbass`, `lofi`]],
+            [nodes[3], nodes[4], [`rap`, `lofi`]],
+            [nodes[3], nodes[8], [`rap`, `randb`]],
+            [nodes[11], nodes[12], [`jazz`, `funk`]],
+            [nodes[8], nodes[12], [`randb`, `funk`]],
+            [nodes[8], nodes[17], [`randb`, `blues`]],
+            [nodes[7], nodes[11], [`reggae`, `jazz`]],
+            [nodes[16], nodes[13], [`motown`, `gospel`]],
+            [nodes[13], nodes[17], [`gospel`, `blues`]],
+            [nodes[13], nodes[20], [`gospel`, `theatre`]],
+            [nodes[13], nodes[21], [`gospel`, `hymns`]],
+            [nodes[13], nodes[8], [`gospel`, `randb`]],
+            [nodes[16], nodes[17], [`motown`, `blues`]],
+            [nodes[16], nodes[20], [`motown`, `theatre`]],
+            [nodes[11], nodes[22], [`jazz`, `band`]],
+            [nodes[22], nodes[20], [`band`, `theatre`]],
+            [nodes[22], nodes[25], [`band`, `classical`]],
+            [nodes[19], nodes[3], [`latin`, `rap`]],
+            [nodes[19], nodes[7], [`latin`, `reggae`]],
+            [nodes[9], nodes[10], [`edm`, `pop`]],
+            [nodes[9], nodes[23], [`edm`, `world`]],
+            [nodes[10], nodes[6], [`pop`, `rock`]],
+            [nodes[10], nodes[14], [`pop`, `country`]],
+            [nodes[10], nodes[15], [`pop`, `alternative`]],
+            [nodes[17], nodes[14], [`blues`, `country`]],
+            [nodes[15], nodes[14], [`alternative`, `country`]],
+            [nodes[18], nodes[14], [`folk`, `country`]],
+            [nodes[18], nodes[15], [`folk`, `alternative`]],
+            [nodes[18], nodes[20], [`folk`, `theatre`]],
+            [nodes[18], nodes[21], [`folk`, `hymns`]],
+            [nodes[18], nodes[6], [`folk`, `rock`]],
+            [nodes[21], nodes[25], [`hymns`, `classical`]],
+            [nodes[21], nodes[26], [`hymns`, `traditional`]],
+            [nodes[24], nodes[20], [`scores`, `theatre`]],
+            [nodes[24], nodes[25], [`scores`, `classical`]],
+            [nodes[25], nodes[23], [`classical`, `world`]],
+            [nodes[26], nodes[23], [`traditional`, `world`]],
+            [nodes[19], nodes[23], [`latin`, `world`]],
         ];
 
         for (let i = 0; i < edges.length; i++) {
@@ -359,8 +422,8 @@
                     modal.style.display = 'block';
                     modal.style.left = `${d3.select(this).attr('cx')-15}px`;
                     modal.style.top = `${d3.select(this).attr('cy')}px`;
-                    document.getElementById('genreName').innerHTML = Object.keys(albums)[i];
-                    document.getElementById('genreSummary').innerHTML = `${albums[Object.keys(albums)[i]]}`;
+                    document.getElementById('genreName').innerHTML = `${genrenames[Object.keys(albums)[i]]}`;
+                    document.getElementById('genreSummary').innerHTML = `${summaries[Object.keys(albums)[i]]}`;
                     document.getElementById('genreAlbum1').innerHTML = `${albums[Object.keys(albums)[i]][0]}`;
                     document.getElementById('genreAlbum2').innerHTML = `${albums[Object.keys(albums)[i]][1]}`;
                     document.getElementById('genreAlbum3').innerHTML = `${albums[Object.keys(albums)[i]][2]}`;
@@ -370,7 +433,7 @@
                     backdrop.style.display = `block`;})
                 .on('mouseover', function() { d3.select(this).style('stroke-opacity', 1); d3.select(this).style('filter', `Brightness(150%)`);})
                 .on('mouseout', function() { d3.select(this).style('stroke-opacity', 1); d3.select(this).style('filter', `Brightness(100%)`);});
-            var name = svgContainer.append('text').attr('x', nodes[i][0]-(4*(Object.keys(albums)[i].length))).attr('y', nodes[i][1]).attr('dy', `.35em`).attr('font-size', `15px`).attr('font-family', `ShareTechMono`).text(`${Object.keys(albums)[i]}`).style('fill', genrepath.indexOf(Object.keys(albums)[i]) != -1 ? '#ffffff' : '#555555');      
+            var name = svgContainer.append('text').attr('x', nodes[i][0]-(4*(genrenames[Object.keys(albums)[i]].length))).attr('y', nodes[i][1]).attr('dy', `.35em`).attr('font-size', `15px`).attr('font-family', `ShareTechMono`).text(`${genrenames[Object.keys(albums)[i]]}`).style('fill', genrepath.indexOf(Object.keys(albums)[i]) != -1 ? '#ffffff' : '#555555');      
         }
 
         var span = document.getElementsByClassName('close')[0];
@@ -389,6 +452,7 @@
 </body>
 
 <footer>
+    <br/>
     <div class='footbar'>
         HipsterTrek © 2021 &nbsp;
     </div>
