@@ -9,9 +9,9 @@ router.get('/about', (req, res) => {
   res.render('about');
 });
 
-router.get('/console', (req, res) => {
+router.get('/map', (req, res) => {
   var payload = `empty`;
-  res.render('console', {data:payload});
+  res.render('map', {data:payload});
 });
 
 module.exports = router;

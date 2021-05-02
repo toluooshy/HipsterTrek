@@ -17,7 +17,7 @@ app.set('view engine', 'ejs');
 
 app.use('/', routes);
 
-app.post('/console', function(req, res) {
+app.post('/map', function(req, res) {
   var startgenre = req.body.start.toLowerCase();
   var endgenre = req.body.end.toLowerCase();
   async function fetch(){
@@ -192,7 +192,7 @@ app.post('/console', function(req, res) {
     // Leaf Genres (add leaves to the aformentioned genres)
 
     payload = map.dijkstra(startgenre,endgenre);
-    res.render('console', {data:payload});
+    res.render('map', {data:payload});
 
   }
   fetch();
